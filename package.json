@@ -1,0 +1,28 @@
+{
+  "name": "fillbackground",
+  "version": "1.0.2",
+  "description": "Fill background of icons randomly spread and oriented",
+  "main": "fillBackground.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Resousse/fillBackgroundJS.git"
+  },
+  "keywords": [
+    "fill",
+    "background",
+    "spread",
+    "icons"
+  ],
+  "author": "Resousse",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/Resousse/fillBackgroundJS/issues"
+  },
+  "homepage": "https://github.com/Resousse/fillBackgroundJS#readme"
+}

@@ -5,7 +5,7 @@ Fill background of icons randomly spread and oriented.
 ## Include of the library
 If you have a local version of the lib `<script type="text/javascript" src="fillBackground.js"></script>`
 
-If you prefer to have a remote version of the lib `To complete`
+If you prefer to have a remote version of the lib `<script type="text/javascript" src="https://unpkg.com/fillbackground@latest/fillBackground.js"></script>`
 
 ## Fill of the background
 Background can be filled upon body load or any other event, see example below.
