@@ -39,7 +39,8 @@ Note : So far no refresh upon resolution change (or smartphone rotation)
 </body>
 ```
 
-
+# Demo
+![Demo](demo.png)
 
 
 
