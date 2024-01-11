@@ -1,13 +1,14 @@
 {
   "name": "fillbackground",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "Fill background of icons randomly spread and oriented",
   "main": "fillBackground.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly" : "uglifyjs -o fillBackground.min.js fillBackground.js"
   },
   "repository": {
     "type": "git",
