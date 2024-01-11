@@ -62,6 +62,36 @@ function isAlreadyThere(coords, x, y, angle, size)
 }
 
 function fillBackground(idCanvas, color, icons ,opacity, size = 100, minMargin = 10, staticOrientation = false){
+    var iconsLst = []
+    var counter = 0;
+    var lfunc = function(){if (--counter === 0) fillBackgroundOnceLoaded(idCanvas, color, iconsLst ,opacity, size = 100, minMargin = 10, staticOrientation = false);};
+
+    if (typeof icons === 'string')
+    {
+        counter = 1;
+        var img = new Image();
+        img.src = icons;
+        img.onload = lfunc;
+        iconsLst.push(img);
+    }
+    else if (Array.isArray(icons))
+    {
+        counter = icons.length;
+        icons.forEach(el => {
+            var img = new Image();
+            img.src = el;
+            img.onload = lfunc;
+            iconsLst.push(img);
+        });
+    }
+    else
+        console.error("provided icon(s) is/are not valid");
+    
+}
+
+function fillBackgroundOnceLoaded(idCanvas, color, icons ,opacity, size = 100, minMargin = 10, staticOrientation = false){
+    var avgWidth = 0;
+    var avgHeight = 0;
     if (opacity == undefined)
         opacity = 6
     canvas = document.getElementById(idCanvas);
@@ -75,35 +105,17 @@ function fillBackground(idCanvas, color, icons ,opacity, size = 100, minMargin =
     ctx.fillStyle = color;
     ctx.fillRect(0, 0, window.screen.width, window.screen.height);
     ctx.globalCompositeOperation = 'destination-over';
-    var iconsLst = []
-    var avgWidth = 0;
-    var avgHeight = 0;
-    if (typeof icons === 'string')
-    {
-        var img = new Image();
-        img.src = icons;
-        iconsLst.push(img);
-        avgWidth = img.width;
-        avgWidth = img.height;
-    }
-    else if (Array.isArray(icons))
-    {
-        icons.forEach(el => {
-            var img = new Image();
-            img.src = el;
-            
-            iconsLst.push(img);
-            avgWidth += img.width;
-            avgWidth += img.height;
-        });
-        avgHeight /= iconsLst.length;
-        avgWidth /= iconsLst.length;
-    }
-    else
-        console.error("provided icon(s) is/are not valid")
     
-    //if (iconsLst.length)
-    //    console.log(iconsLst);
+    icons.forEach(img => {
+        avgWidth += img.width;
+        avgWidth += img.height;
+    });
+
+    avgHeight /= icons.length;
+    avgWidth /= icons.length;
+    
+    //if (icons.length)
+    //    console.log(icons);
     let angle = 0
     const nbRow = Math.floor(window.screen.height / (size + minMargin));
     const nbCol = Math.floor(window.screen.width / (size + minMargin));
@@ -115,7 +127,7 @@ function fillBackground(idCanvas, color, icons ,opacity, size = 100, minMargin =
     for (let j = 0; j < nbRow; j++)
     for(let i = 0; i < nbCol; i++ )
     {
-        img = iconsLst[Math.floor(Math.random() * iconsLst.length)]
+        img = icons[Math.floor(Math.random() * icons.length)]
         x = Math.floor(Math.random() * stepCol) + minMargin + stepCol *  i ;
         y = Math.floor(Math.random() * stepRow) + minMargin + stepRow *  j;
         angle = Math.floor(Math.random() * 360);
