@@ -1,70 +1,68 @@
-function doPolygonsIntersect (a, b) {
-    var polygons = [a, b];
-    var minA, maxA, projected, i, i1, j, minB, maxB;
-
-    for (i = 0; i < polygons.length; i++) {
-
-        var polygon = polygons[i];
-        for (i1 = 0; i1 < polygon.length; i1++) {
-
-            var i2 = (i1 + 1) % polygon.length;
-            var p1 = polygon[i1];
-            var p2 = polygon[i2];
-
-            var normal = { x: p2.y - p1.y, y: p1.x - p2.x };
-
-            minA = maxA = undefined;
-
-            for (j = 0; j < a.length; j++) {
-                projected = normal.x * a[j].x + normal.y * a[j].y;
-                if (minA === undefined || projected < minA) {
-                    minA = projected;
-                }
-                if (maxA === undefined || projected > maxA) {
-                    maxA = projected;
-                }
-            }
-
-            minB = maxB = undefined;
-            for (j = 0; j < b.length; j++) {
-                projected = normal.x * b[j].x + normal.y * b[j].y;
-                if (minB === undefined || projected < minB) {
-                    minB = projected;
-                }
-                if (maxB === undefined || projected > maxB) {
-                    maxB = projected;
-                }
-            }
-
-            if (maxA < minB || maxB < minA) {
-                return false;
-            }
-        }
+function segmentCrossing(p1, p2, p3, p4) {
+    function orientation(a, b, c) {
+        var val = (b.y - a.y) * (c.x - b.x) - (b.x - a.x) * (c.y - b.y);
+        if (val === 0) return 0;
+        return (val > 0) ? 1 : 2;
     }
-    return true;
-};
+    function segmentAreCrossing(p1, p2, p3, p4) {
+        var o1 = orientation(p1, p2, p3);
+        var o2 = orientation(p1, p2, p4);
+        var o3 = orientation(p3, p4, p1);
+        var o4 = orientation(p3, p4, p2);
+
+        if (o1 !== o2 && o3 !== o4) {
+            return true;
+        }
+
+        if (o1 === 0 && onSegment(p1, p3, p2)) return true;
+        if (o2 === 0 && onSegment(p1, p4, p2)) return true;
+        if (o3 === 0 && onSegment(p3, p1, p4)) return true;
+        if (o4 === 0 && onSegment(p3, p2, p4)) return true;
+
+        return false;
+    }
+
+    function onSegment(p, q, r) {
+        return q.x <= Math.max(p.x, r.x) && q.x >= Math.min(p.x, r.x) &&
+               q.y <= Math.max(p.y, r.y) && q.y >= Math.min(p.y, r.y);
+    }
+    return segmentAreCrossing(p1, p2, p3, p4);
+}
 
 function isAlreadyThere(coords, x, y, angle, size)
 {
+    function onSegment(p, q, r) {
+        return (q.x <= Math.max(p.x, r.x) && q.x >= Math.min(p.x, r.x) &&
+            q.y <= Math.max(p.y, r.y) && q.y >= Math.min(p.y, r.y));
+    }
     const rad = angle*(Math.PI/180);
-    const xb = size * Math.cos(rad) - size * Math.sin(rad) + x;
-    const yb = size * Math.sin(rad) + size * Math.cos(rad) + y;
+    const a = {x: x, y:y};
+    const b = {x : size * Math.cos(rad) + x, y:size * Math.sin(rad) + y};
+    const c = {x: size * Math.cos(rad) - size * Math.sin(rad) + x, y: size * Math.sin(rad) + size * Math.cos(rad) + y};
+    const d = {x : - size * Math.sin(rad) + x, y:size * Math.cos(rad) + y};
     var xd, yd;
 
     for (const pos of coords) {
-        xd  = size * Math.cos(pos[2] *(Math.PI/180)) - size * Math.sin(pos[2] *(Math.PI/180)) + pos[0];
-        yd = size * Math.sin(pos[2] *(Math.PI/180)) + size * Math.cos(pos[2] *(Math.PI/180)) + pos[1];
-
-        if (doPolygonsIntersect([{"x": x, "y" : y}, {"x": xb, "y" : yb}], [{"x": pos[0], "y" : pos[1]}, {"x": xd, "y" : yd}]) )
-            return true
+        const rad2 = pos[2] *(Math.PI/180);
+        const w = {x: pos[0], y: pos[1]};
+        const x = {x : size * Math.cos(rad2) + pos[0], y: size * Math.sin(rad2) + pos[1]};
+        const y = {x: size * Math.cos(pos[2] *(Math.PI/180)) - size * Math.sin(pos[2] *(Math.PI/180)) + pos[0], y: size * Math.sin(pos[2] *(Math.PI/180)) + size * Math.cos(pos[2] *(Math.PI/180)) + pos[1]};
+        const z = {x : - size * Math.sin(rad2) + pos[0], y:size * Math.cos(rad2) + pos[1]};
+        if (segmentCrossing(a,b, w, x) || segmentCrossing(a,b, x, y) || segmentCrossing(a,b, y, z) || segmentCrossing(a,b, z, w) ||
+        segmentCrossing(b,c, w, x) || segmentCrossing(b,c, x, y) || segmentCrossing(b,c, y, z) || segmentCrossing(b,c, z, w) ||
+        segmentCrossing(c,d, w, x) || segmentCrossing(c,d, x, y) || segmentCrossing(c,d, y, z) || segmentCrossing(c,d, z, w) ||
+        segmentCrossing(a,d, w, x) || segmentCrossing(a,d, x, y) || segmentCrossing(a,d, y, z) || segmentCrossing(a,d, z, w)
+         )
+        return true;
       }
-    return false;
+    return false
 }
 
 function fillBackground(idCanvas, color, icons ,opacity, size = 100, minMargin = 10, staticOrientation = false){
+
     var iconsLst = []
     var counter = 0;
-    var lfunc = function(){if (--counter === 0) fillBackgroundOnceLoaded(idCanvas, color, iconsLst ,opacity, size = 100, minMargin = 10, staticOrientation = false);};
+    var lfunc = function(){if (--counter === 0) fillBackgroundOnceLoaded(idCanvas, color, iconsLst ,opacity, size, minMargin, staticOrientation);};
 
     if (typeof icons === 'string')
     {
@@ -142,8 +140,7 @@ function fillBackgroundOnceLoaded(idCanvas, color, icons ,opacity, size = 100, m
             ctx.drawImage(img, 0, 0, size, size * img.height / img.width);
             coords.push([x, y, angle]);
         }
-        ctx.restore();
-
+        ctx.restore();        
     }
     //console.log(coords);
 }
