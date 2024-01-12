@@ -24,58 +24,55 @@ function segmentCrossing(p1, p2, p3, p4) {
 
     function onSegment(p, q, r) {
         return q.x <= Math.max(p.x, r.x) && q.x >= Math.min(p.x, r.x) &&
-               q.y <= Math.max(p.y, r.y) && q.y >= Math.min(p.y, r.y);
+            q.y <= Math.max(p.y, r.y) && q.y >= Math.min(p.y, r.y);
     }
     return segmentAreCrossing(p1, p2, p3, p4);
 }
 
-function isAlreadyThere(coords, x, y, angle, size)
-{
+function isAlreadyThere(coords, x, y, angle, size) {
     function onSegment(p, q, r) {
         return (q.x <= Math.max(p.x, r.x) && q.x >= Math.min(p.x, r.x) &&
             q.y <= Math.max(p.y, r.y) && q.y >= Math.min(p.y, r.y));
     }
-    const rad = angle*(Math.PI/180);
-    const a = {x: x, y:y};
-    const b = {x : size * Math.cos(rad) + x, y:size * Math.sin(rad) + y};
-    const c = {x: size * Math.cos(rad) - size * Math.sin(rad) + x, y: size * Math.sin(rad) + size * Math.cos(rad) + y};
-    const d = {x : - size * Math.sin(rad) + x, y:size * Math.cos(rad) + y};
+    const rad = angle * (Math.PI / 180);
+    const a = { x: x, y: y };
+    const b = { x: size * Math.cos(rad) + x, y: size * Math.sin(rad) + y };
+    const c = { x: size * Math.cos(rad) - size * Math.sin(rad) + x, y: size * Math.sin(rad) + size * Math.cos(rad) + y };
+    const d = { x: - size * Math.sin(rad) + x, y: size * Math.cos(rad) + y };
     var xd, yd;
 
     for (const pos of coords) {
-        const rad2 = pos[2] *(Math.PI/180);
-        const w = {x: pos[0], y: pos[1]};
-        const x = {x : size * Math.cos(rad2) + pos[0], y: size * Math.sin(rad2) + pos[1]};
-        const y = {x: size * Math.cos(pos[2] *(Math.PI/180)) - size * Math.sin(pos[2] *(Math.PI/180)) + pos[0], y: size * Math.sin(pos[2] *(Math.PI/180)) + size * Math.cos(pos[2] *(Math.PI/180)) + pos[1]};
-        const z = {x : - size * Math.sin(rad2) + pos[0], y:size * Math.cos(rad2) + pos[1]};
-        if (segmentCrossing(a,b, w, x) || segmentCrossing(a,b, x, y) || segmentCrossing(a,b, y, z) || segmentCrossing(a,b, z, w) ||
-        segmentCrossing(b,c, w, x) || segmentCrossing(b,c, x, y) || segmentCrossing(b,c, y, z) || segmentCrossing(b,c, z, w) ||
-        segmentCrossing(c,d, w, x) || segmentCrossing(c,d, x, y) || segmentCrossing(c,d, y, z) || segmentCrossing(c,d, z, w) ||
-        segmentCrossing(a,d, w, x) || segmentCrossing(a,d, x, y) || segmentCrossing(a,d, y, z) || segmentCrossing(a,d, z, w)
-         )
-        return true;
-      }
+        const rad2 = pos[2] * (Math.PI / 180);
+        const w = { x: pos[0], y: pos[1] };
+        const x = { x: size * Math.cos(rad2) + pos[0], y: size * Math.sin(rad2) + pos[1] };
+        const y = { x: size * Math.cos(pos[2] * (Math.PI / 180)) - size * Math.sin(pos[2] * (Math.PI / 180)) + pos[0], y: size * Math.sin(pos[2] * (Math.PI / 180)) + size * Math.cos(pos[2] * (Math.PI / 180)) + pos[1] };
+        const z = { x: - size * Math.sin(rad2) + pos[0], y: size * Math.cos(rad2) + pos[1] };
+        if (segmentCrossing(a, b, w, x) || segmentCrossing(a, b, x, y) || segmentCrossing(a, b, y, z) || segmentCrossing(a, b, z, w) ||
+            segmentCrossing(b, c, w, x) || segmentCrossing(b, c, x, y) || segmentCrossing(b, c, y, z) || segmentCrossing(b, c, z, w) ||
+            segmentCrossing(c, d, w, x) || segmentCrossing(c, d, x, y) || segmentCrossing(c, d, y, z) || segmentCrossing(c, d, z, w) ||
+            segmentCrossing(a, d, w, x) || segmentCrossing(a, d, x, y) || segmentCrossing(a, d, y, z) || segmentCrossing(a, d, z, w)
+        )
+            return true;
+    }
     return false
 }
 
-function fillBackground(idCanvas, color, icons ,opacity, size = 100, minMargin = 10, staticOrientation = false){
-    window.onresize = function(event) {
-        fillBackground(idCanvas, color, icons , opacity, size, minMargin, staticOrientation);
+function fillBackground(idCanvas, color, icons, opacity, size = 100, minMargin = 10, staticOrientation = false) {
+    window.onresize = function (event) {
+        fillBackground(idCanvas, color, icons, opacity, size, minMargin, staticOrientation);
     };
     var iconsLst = []
     var counter = 0;
-    var lfunc = function(){if (--counter === 0) fillBackgroundOnceLoaded(idCanvas, color, iconsLst ,opacity, size, minMargin, staticOrientation);};
+    var lfunc = function () { if (--counter === 0) fillBackgroundOnceLoaded(idCanvas, color, iconsLst, opacity, size, minMargin, staticOrientation); };
 
-    if (typeof icons === 'string')
-    {
+    if (typeof icons === 'string') {
         counter = 1;
         var img = new Image();
         img.src = icons;
         img.onload = lfunc;
         iconsLst.push(img);
     }
-    else if (Array.isArray(icons))
-    {
+    else if (Array.isArray(icons)) {
         counter = icons.length;
         icons.forEach(el => {
             var img = new Image();
@@ -86,11 +83,11 @@ function fillBackground(idCanvas, color, icons ,opacity, size = 100, minMargin =
     }
     else
         console.error("provided icon(s) is/are not valid");
-    
+
 }
 
-function fillBackgroundOnceLoaded(idCanvas, color, icons ,opacity, size = 100, minMargin = 10, staticOrientation = false){
-    
+function fillBackgroundOnceLoaded(idCanvas, color, icons, opacity, size = 100, minMargin = 10, staticOrientation = false) {
+
     var avgWidth = 0;
     var avgHeight = 0;
     if (opacity == undefined)
@@ -104,11 +101,11 @@ function fillBackgroundOnceLoaded(idCanvas, color, icons ,opacity, size = 100, m
 
     var ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.globalAlpha = opacity/100;
+    ctx.globalAlpha = opacity / 100;
     ctx.fillStyle = color;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.globalCompositeOperation = 'destination-over';
-    
+
     icons.forEach(img => {
         avgWidth += img.width;
         avgWidth += img.height;
@@ -116,7 +113,7 @@ function fillBackgroundOnceLoaded(idCanvas, color, icons ,opacity, size = 100, m
 
     avgHeight /= icons.length;
     avgWidth /= icons.length;
-    
+
     //if (icons.length)
     //    console.log(icons);
     let angle = 0
@@ -126,26 +123,33 @@ function fillBackgroundOnceLoaded(idCanvas, color, icons ,opacity, size = 100, m
     const stepCol = Math.floor(window.screen.width / nbCol);
     let x, y;
     let coords = [];
+    let attempt = 0;
 
     for (let j = 0; j < nbRow; j++)
-    for(let i = 0; i < nbCol; i++ )
-    {
-        img = icons[Math.floor(Math.random() * icons.length)]
-        x = Math.floor(Math.random() * stepCol) + minMargin + stepCol *  i ;
-        y = Math.floor(Math.random() * stepRow) + minMargin + stepRow *  j;
-        angle = Math.floor(Math.random() * 360);
-        if (staticOrientation)
-            angle = staticOrientation;
-        ctx.save();
-        ctx.translate(x, y);
+        for (let i = 0; i < nbCol; i++) {
 
-        ctx.rotate(angle*Math.PI/180);
-        if (!isAlreadyThere(coords, x, y, angle, size))
-        {
-            ctx.drawImage(img, 0, 0, size, size * img.height / img.width);
-            coords.push([x, y, angle]);
+            img = icons[Math.floor(Math.random() * icons.length)]
+            x = Math.floor(Math.random() * stepCol) + minMargin + stepCol * i;
+            y = Math.floor(Math.random() * stepRow) + minMargin + stepRow * j;
+            angle = Math.floor(Math.random() * 360);
+            if (staticOrientation)
+                angle = staticOrientation;
+
+            if (!isAlreadyThere(coords, x, y, angle, size)) {
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.rotate(angle * Math.PI / 180);
+                ctx.drawImage(img, 0, 0, size, size * img.height / img.width);
+                coords.push([x, y, angle]);
+                ctx.restore();
+                attemp = 0;
+            }
+            else if (attempt == 0)
+                attempt = 3;
+            else 
+                attempt --;
+            if (attempt != 0)
+                i--;
         }
-        ctx.restore();        
-    }
     //console.log(coords);
 }
