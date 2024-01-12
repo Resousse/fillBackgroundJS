@@ -59,7 +59,9 @@ function isAlreadyThere(coords, x, y, angle, size)
 }
 
 function fillBackground(idCanvas, color, icons ,opacity, size = 100, minMargin = 10, staticOrientation = false){
-
+    window.onresize = function(event) {
+        fillBackground(idCanvas, color, icons , opacity, size, minMargin, staticOrientation);
+    };
     var iconsLst = []
     var counter = 0;
     var lfunc = function(){if (--counter === 0) fillBackgroundOnceLoaded(idCanvas, color, iconsLst ,opacity, size, minMargin, staticOrientation);};
@@ -88,10 +90,12 @@ function fillBackground(idCanvas, color, icons ,opacity, size = 100, minMargin =
 }
 
 function fillBackgroundOnceLoaded(idCanvas, color, icons ,opacity, size = 100, minMargin = 10, staticOrientation = false){
+    
     var avgWidth = 0;
     var avgHeight = 0;
     if (opacity == undefined)
         opacity = 6
+
     canvas = document.getElementById(idCanvas);
     canvas.width = window.screen.width;
     canvas.height = window.screen.height;
@@ -99,9 +103,10 @@ function fillBackgroundOnceLoaded(idCanvas, color, icons ,opacity, size = 100, m
     canvas.style.zIndex = "-1";
 
     var ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.globalAlpha = opacity/100;
     ctx.fillStyle = color;
-    ctx.fillRect(0, 0, window.screen.width, window.screen.height);
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.globalCompositeOperation = 'destination-over';
     
     icons.forEach(img => {
