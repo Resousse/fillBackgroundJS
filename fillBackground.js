@@ -94,8 +94,9 @@ function fillBackgroundOnceLoaded(idCanvas, color, icons, opacity, size = 100, m
         opacity = 6
 
     canvas = document.getElementById(idCanvas);
-    canvas.width = window.screen.width;
-    canvas.height = window.screen.height;
+    var ratio = window.devicePixelRatio || 1;
+    canvas.width = window.screen.width * ratio;
+    canvas.height = window.screen.height * ratio;
     canvas.style.position = "fixed";
     canvas.style.zIndex = "-1";
 
@@ -117,10 +118,10 @@ function fillBackgroundOnceLoaded(idCanvas, color, icons, opacity, size = 100, m
     //if (icons.length)
     //    console.log(icons);
     let angle = 0
-    const nbRow = Math.floor(window.screen.height / (size + minMargin));
-    const nbCol = Math.floor(window.screen.width / (size + minMargin));
-    const stepRow = Math.floor(window.screen.height / nbRow);
-    const stepCol = Math.floor(window.screen.width / nbCol);
+    const nbRow = Math.floor(canvas.height / (size + minMargin));
+    const nbCol = Math.floor(canvas.width / (size + minMargin));
+    const stepRow = Math.floor(canvas.height / nbRow);
+    const stepCol = Math.floor(canvas.width / nbCol);
     let x, y;
     let coords = [];
     let attempt = 0;
