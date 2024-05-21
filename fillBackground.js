@@ -58,9 +58,19 @@ function isAlreadyThere(coords, x, y, angle, size) {
 }
 
 function fillBackground(idCanvas, color, icons, opacity, size = 100, minMargin = 10, staticOrientation = false) {
+    let toRefresh = true;
     window.onresize = function (event) {
-        fillBackground(idCanvas, color, icons, opacity, size, minMargin, staticOrientation);
+        if (toRefresh)
+            fillBackground(idCanvas, color, icons, opacity, size, minMargin, staticOrientation);
     };
+    window.addEventListener("scroll", (event) => {
+        let scroll = this.scrollY;
+        if (scroll <0)
+            toRefresh = false;
+        else
+            toRefresh = true;
+        console.log(scroll);
+    });
     var iconsLst = []
     var counter = 0;
     var lfunc = function () { if (--counter === 0) fillBackgroundOnceLoaded(idCanvas, color, iconsLst, opacity, size, minMargin, staticOrientation); };
