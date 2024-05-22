@@ -74,9 +74,13 @@ function fillBackground(idCanvas, color, icons, opacity, size = 100, minMargin =
     window.addEventListener("touchcancel", (event) => {
         toRefresh = true;
     });
-    var iconsLst = []
+    iconsLst = [];
+    backGroundImagesLoadedOnce = false;
     var counter = 0;
-    var lfunc = function () { if (--counter === 0) fillBackgroundOnceLoaded(idCanvas, color, iconsLst, opacity, size, minMargin, staticOrientation); };
+    var lfunc = function () { if (--counter === 0 || backGroundImagesLoadedOnce) {
+        backGroundImagesLoadedOnce = true;
+        fillBackgroundOnceLoaded(idCanvas, color, iconsLst, opacity, size, minMargin, staticOrientation); }
+    };
 
     if (typeof icons === 'string') {
         counter = 1;
