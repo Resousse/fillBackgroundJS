@@ -60,8 +60,7 @@ function isAlreadyThere(coords, x, y, angle, size) {
 function fillBackground(idCanvas, color, icons, opacity, size = 100, minMargin = 10, staticOrientation = false) {
     let toRefresh = true;
     window.onresize = function (event) {
-        console.log(event);
-        if (toRefresh)
+        if (toRefresh && document.body.scrollTop >= 0)
             fillBackground(idCanvas, color, icons, opacity, size, minMargin, staticOrientation);
     };
     window.addEventListener("touchstart", (event) => {
