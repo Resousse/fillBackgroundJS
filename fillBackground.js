@@ -63,13 +63,14 @@ function fillBackground(idCanvas, color, icons, opacity, size = 100, minMargin =
         if (toRefresh)
             fillBackground(idCanvas, color, icons, opacity, size, minMargin, staticOrientation);
     };
-    window.addEventListener("scroll", (event) => {
-        let scroll = this.scrollY;
-        if (scroll <0)
-            toRefresh = false;
-        else
-            toRefresh = true;
-        console.log(scroll);
+    window.addEventListener("touchstart", (event) => {
+        toRefresh = false;
+    });
+    window.addEventListener("touchend", (event) => {
+        toRefresh = true;
+    });
+    window.addEventListener("touchcancel", (event) => {
+        toRefresh = true;
     });
     var iconsLst = []
     var counter = 0;
