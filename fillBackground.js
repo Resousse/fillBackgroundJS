@@ -60,10 +60,9 @@ function isAlreadyThere(coords, x, y, angle, size) {
 function fillBackground(idCanvas, color, icons, opacity, size = 100, minMargin = 10, staticOrientation = false) {
     let toRefresh = true;
     window.onresize = function (event) {
-        if (toRefresh && document.body.scrollTop >= 0)
-            {
-                fillBackground(idCanvas, color, icons, opacity, size, minMargin, staticOrientation);
-            }
+        if (toRefresh && document.body.scrollTop >= 0) {
+            fillBackground(idCanvas, color, icons, opacity, size, minMargin, staticOrientation);
+        }
     };
     window.addEventListener("touchstart", (event) => {
         toRefresh = false;
@@ -77,10 +76,16 @@ function fillBackground(idCanvas, color, icons, opacity, size = 100, minMargin =
     iconsLst = [];
     backGroundImagesLoadedOnce = false;
     var counter = 0;
-    var lfunc = function () { if (--counter === 0 || backGroundImagesLoadedOnce) {
-        backGroundImagesLoadedOnce = true;
-        fillBackgroundOnceLoaded(idCanvas, color, iconsLst, opacity, size, minMargin, staticOrientation); }
+    var lfunc = function () {
+        if (--counter === 0 || backGroundImagesLoadedOnce) {
+            backGroundImagesLoadedOnce = true;
+            fillBackgroundOnceLoaded(idCanvas, color, iconsLst, opacity, size, minMargin, staticOrientation);
+        }
     };
+    if (backGroundImagesLoadedOnce) {
+        lfunc();
+        return;
+    }
 
     if (typeof icons === 'string') {
         counter = 1;
@@ -118,10 +123,10 @@ function fillBackgroundOnceLoaded(idCanvas, color, icons, opacity, size = 100, m
     canvas.height = window.screen.height * ratio;
     canvas.style.position = "fixed";
     canvas.style.zIndex = "-1";
-    
+
     canvasHeight = canvas.height;
     canvasWidth = canvas.width;
-    
+
     var ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.globalAlpha = opacity / 100;
@@ -169,8 +174,8 @@ function fillBackgroundOnceLoaded(idCanvas, color, icons, opacity, size = 100, m
             }
             else if (attempt == 0)
                 attempt = 3;
-            else 
-                attempt --;
+            else
+                attempt--;
             if (attempt != 0)
                 i--;
         }
