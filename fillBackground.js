@@ -58,7 +58,7 @@ function isAlreadyThere(coords, x, y, angle, size) {
 }
 
 function fillBackground(idCanvas, color, icons, opacity, size = 100, minMargin = 10, staticOrientation = false) {
-    let toRefresh = true;
+    toRefresh = true;
     window.onresize = function (event) {
         if (toRefresh && document.body.scrollTop >= 0) {
             fillBackground(idCanvas, color, icons, opacity, size, minMargin, staticOrientation);
