@@ -76,7 +76,7 @@ function fillBackground(idCanvas, color, icons, opacity, size = 100, minMargin =
     iconsLst = [];
     var counter = 0;
     var lfunc = function () {
-        if (--counter === 0 || backGroundImagesLoadedOnce) {
+        if (--counter === 0 || (typeof backGroundImagesLoadedOnce !== "undefined" && backGroundImagesLoadedOnce)) {
             backGroundImagesLoadedOnce = true;
             fillBackgroundOnceLoaded(idCanvas, color, iconsLst, opacity, size, minMargin, staticOrientation);
         }
