@@ -110,9 +110,7 @@ function fillBackgroundOnceLoaded(idCanvas, color, icons, opacity, size = 100, m
     canvas.height = window.screen.height * ratio;
     canvas.style.position = "fixed";
     canvas.style.zIndex = "-1";
-    if (typeof canvasHeight !== 'undefined' && typeof canvasWidth !== 'undefined' && canvasHeight == canvas.height && canvasWidth == canvas.width)
-        return;
-
+    
     var ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.globalAlpha = opacity / 100;
@@ -165,7 +163,4 @@ function fillBackgroundOnceLoaded(idCanvas, color, icons, opacity, size = 100, m
             if (attempt != 0)
                 i--;
         }
-    //console.log(coords);
-    canvasHeight = canvas.height;
-    canvasWidth = canvas.width;
 }
