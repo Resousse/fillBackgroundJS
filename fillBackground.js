@@ -121,6 +121,13 @@ function fillBackgroundOnceLoaded(idCanvas, color, icons, opacity, size = 100, m
         console.log("nothing to refresh");
         return true;
     }
+    console.log("isCanvaHeight "+ typeof canvasHeight !== "undefined");
+    console.log("iscanvasWidth "+ typeof canvasWidth !== "undefined");
+    if (typeof canvasWidth !== "undefined") console.log("canvasWidth " + canvasWidth);
+    if (typeof canvasHeight !== "undefined") console.log("canvasHeight " + canvasHeight);
+    console.log("width "+ window.innerWidth * ratio );
+    console.log("height "+ window.innerHeight * ratio );
+
     console.log(typeof canvasHeight !== "undefined" && typeof canvasWidth !== "undefined" && canvasWidth == window.innerWidth * ratio && canvasHeight == window.innerHeight * ratio);
     canvas.width = window.innerWidth * ratio;
     canvas.height = window.innerHeight * ratio;
