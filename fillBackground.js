@@ -117,7 +117,7 @@ function fillBackgroundOnceLoaded(idCanvas, color, icons, opacity, size = 100, m
 
     canvas = document.getElementById(idCanvas);
     var ratio = window.devicePixelRatio || 1;
-    if (typeof canvasHeight !== "undefined" && typeof canvasWidth !== "undefined" && canvasWidth == window.innerWidth * ratio && canvasHeight == window.innerHeight * ratio) {
+    if (typeof canvasHeight !== "undefined" && typeof canvasWidth !== "undefined" && canvasWidth == window.screen.width * ratio && canvasHeight == window.screen.height * ratio) {
         console.log("nothing to refresh");
         return true;
     }
@@ -125,8 +125,10 @@ function fillBackgroundOnceLoaded(idCanvas, color, icons, opacity, size = 100, m
     console.log("iscanvasWidth "+ typeof canvasWidth !== "undefined");
     if (typeof canvasWidth !== "undefined") console.log("canvasWidth " + canvasWidth);
     if (typeof canvasHeight !== "undefined") console.log("canvasHeight " + canvasHeight);
-    console.log("width "+ window.innerWidth * ratio );
-    console.log("height "+ window.innerHeight * ratio );
+    console.log("innerwidth "+ window.innerWidth * ratio );
+    console.log("innerheight "+ window.innerHeight * ratio );
+    console.log("width "+ window.screen.width * ratio );
+    console.log("height "+ window.screen.height * ratio );
 
     console.log(typeof canvasHeight !== "undefined" && typeof canvasWidth !== "undefined" && canvasWidth == window.innerWidth * ratio && canvasHeight == window.innerHeight * ratio);
     canvas.width = window.innerWidth * ratio;
