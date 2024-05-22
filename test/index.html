@@ -13,6 +13,9 @@
             fillBackground('fillBackgroundCanva', 'orange', ['img1.png', 'img2.png','img3.png'] , 96 , 50, 10)
         }
         window.onload=fillBackgrounds();
+        window.addEventListener("touchmove", (event) => {
+        console.log("touchmove" +event);
+    });
         </script>
         
     <h1>Test page</h1>
