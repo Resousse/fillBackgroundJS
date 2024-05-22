@@ -1,6 +1,6 @@
 {
   "name": "fillbackground",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Fill background of icons randomly spread and oriented",
   "main": "fillBackground.js",
   "directories": {
