@@ -117,8 +117,10 @@ function fillBackgroundOnceLoaded(idCanvas, color, icons, opacity, size = 100, m
 
     canvas = document.getElementById(idCanvas);
     var ratio = window.devicePixelRatio || 1;
-    if (typeof canvasHeight !== "undefined" && typeof canvasWidth !== "undefined" && canvasWidth == window.innerWidth * ratio && canvasHeight == window.innerHeight * ratio)
-        return;
+    if (typeof canvasHeight !== "undefined" && typeof canvasWidth !== "undefined" && canvasWidth == window.innerWidth * ratio && canvasHeight == window.innerHeight * ratio) {
+        console.log("nothing to refresh");
+        return true;
+    }
     canvas.width = window.innerWidth * ratio;
     canvas.height = window.innerHeight * ratio;
     canvas.style.position = "fixed";
