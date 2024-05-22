@@ -130,9 +130,9 @@ function fillBackgroundOnceLoaded(idCanvas, color, icons, opacity, size = 100, m
     console.log("width "+ window.screen.width * ratio );
     console.log("height "+ window.screen.height * ratio );
 
-    console.log(typeof canvasHeight !== "undefined" && typeof canvasWidth !== "undefined" && canvasWidth == window.innerWidth * ratio && canvasHeight == window.innerHeight * ratio);
-    canvas.width = window.innerWidth * ratio;
-    canvas.height = window.innerHeight * ratio;
+    console.log(typeof canvasHeight !== "undefined" && typeof canvasWidth !== "undefined" && canvasWidth == window.screen.width * ratio && canvasHeight == window.screen.height * ratio);
+    canvas.width = window.screen.width * ratio;
+    canvas.height = window.screen.height * ratio;
     canvas.style.position = "fixed";
     canvas.style.zIndex = "-1";
 
