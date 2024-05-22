@@ -115,7 +115,7 @@ function fillBackgroundOnceLoaded(idCanvas, color, icons, opacity, size = 100, m
         opacity = 6
 
     canvas = document.getElementById(idCanvas);
-    if (typeof canvasHeight !== "undefined" && typeof canvasWidth !== "undefined" && canvasWidth == canvas.width && canvasHeight == canvas.height)
+    if (typeof canvasHeight !== "undefined" && typeof canvasWidth !== "undefined" && canvasWidth == window.screen.width * ratio && canvasHeight == window.screen.height * ratio)
         return;
     var ratio = window.devicePixelRatio || 1;
     canvas.width = window.screen.width * ratio;
