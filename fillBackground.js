@@ -61,7 +61,11 @@ function fillBackground(idCanvas, color, icons, opacity, size = 100, minMargin =
     let toRefresh = true;
     window.onresize = function (event) {
         if (toRefresh && document.body.scrollTop >= 0)
-            fillBackground(idCanvas, color, icons, opacity, size, minMargin, staticOrientation);
+            {
+                console.log("scrollTop" + document.body.scrollTop);
+                console.log("scrollHeight" + document.body.scrollHeight);
+                fillBackground(idCanvas, color, icons, opacity, size, minMargin, staticOrientation);
+            }
     };
     window.addEventListener("touchstart", (event) => {
         toRefresh = false;
