@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script type="text/javascript" src="../fillBackground.js"></script>
 </head>
 <body>
     <script type="text/javascript">
@@ -11,8 +12,9 @@
             document.body.prepend(canva);
             fillBackground('fillBackgroundCanva', 'orange', ['img1.png', 'img2.png','img3.png'] , 96 , 50, 10)
         }
+        window.onload=fillBackgrounds();
         </script>
-        <script type="text/javascript" src="../fillBackground.js" onload="fillBackgrounds()"></script>
+        
     <h1>Test page</h1>
 
 </body>
