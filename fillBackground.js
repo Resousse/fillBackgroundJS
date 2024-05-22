@@ -73,7 +73,8 @@ function fillBackground(idCanvas, color, icons, opacity, size = 100, minMargin =
     window.addEventListener("touchcancel", (event) => {
         toRefresh = true;
     });
-    iconsLst = [];
+    if (typeof iconsLst === "undefined")
+        iconsLst = [];
     var counter = 0;
     var lfunc = function () {
         if (--counter === 0 || (typeof backGroundImagesLoadedOnce !== "undefined" && backGroundImagesLoadedOnce)) {
@@ -115,9 +116,9 @@ function fillBackgroundOnceLoaded(idCanvas, color, icons, opacity, size = 100, m
         opacity = 6
 
     canvas = document.getElementById(idCanvas);
+    var ratio = window.devicePixelRatio || 1;
     if (typeof canvasHeight !== "undefined" && typeof canvasWidth !== "undefined" && canvasWidth == window.screen.width * ratio && canvasHeight == window.screen.height * ratio)
         return;
-    var ratio = window.devicePixelRatio || 1;
     canvas.width = window.screen.width * ratio;
     canvas.height = window.screen.height * ratio;
     canvas.style.position = "fixed";
