@@ -81,7 +81,7 @@ function fillBackground(idCanvas, color, icons, opacity, size = 100, minMargin =
             fillBackgroundOnceLoaded(idCanvas, color, iconsLst, opacity, size, minMargin, staticOrientation);
         }
     };
-    if (typeof backGroundImagesLoadedOnce !== "undefined" && backGroundImagesLoadedOnce)
+    if (typeof backGroundImagesLoadedOnce !== "undefined" && backGroundImagesLoadedOnce) {
         lfunc();
         return;
     }
