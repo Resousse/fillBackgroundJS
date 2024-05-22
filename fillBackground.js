@@ -74,7 +74,6 @@ function fillBackground(idCanvas, color, icons, opacity, size = 100, minMargin =
         toRefresh = true;
     });
     iconsLst = [];
-    backGroundImagesLoadedOnce = false;
     var counter = 0;
     var lfunc = function () {
         if (--counter === 0 || backGroundImagesLoadedOnce) {
@@ -82,7 +81,7 @@ function fillBackground(idCanvas, color, icons, opacity, size = 100, minMargin =
             fillBackgroundOnceLoaded(idCanvas, color, iconsLst, opacity, size, minMargin, staticOrientation);
         }
     };
-    if (backGroundImagesLoadedOnce) {
+    if (typeof backGroundImagesLoadedOnce !== "undefined" && backGroundImagesLoadedOnce)
         lfunc();
         return;
     }
